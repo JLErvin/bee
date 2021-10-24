@@ -6,7 +6,9 @@ impl GridSolver for NaiveSolver {
     fn solve(&self, problem: &ProblemStatement) -> Vec<String> {
         let v = problem.dictionary.clone();
 
-        v.into_iter().filter(|s| NaiveSolver::is_legal(s, problem.center, problem.others.clone())).collect()
+        v.into_iter()
+            .filter(|s| NaiveSolver::is_legal(s, problem.center, problem.others.clone()))
+            .collect()
     }
 
     fn name(&self) -> String {

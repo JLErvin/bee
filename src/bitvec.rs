@@ -12,7 +12,9 @@ impl GridSolver for BitSolver {
         let center_mask = from_char(problem.center);
         let other_mask = BitSolver::calc_mask(&problem.others);
 
-        v.into_iter().filter(|s| is_legal(s, center_mask, other_mask)).collect()
+        v.into_iter()
+            .filter(|s| is_legal(s, center_mask, other_mask))
+            .collect()
     }
 
     fn name(&self) -> String {
@@ -22,15 +24,20 @@ impl GridSolver for BitSolver {
 
 impl BitSolver {
     fn calc_mask(chars: &Vec<u8>) -> BitVector {
-        chars.into_iter()
-         .map(|c| from_char(*c))
-         .reduce(|a, b| a | b)
-         .unwrap()
+        chars
+            .into_iter()
+            .map(|c| from_char(*c))
+            .reduce(|a, b| a | b)
+            .unwrap()
     }
 }
 
 fn from_str(s: &str) -> BitVector {
-    s.as_bytes().into_iter().map(|c| from_char(*c)).reduce(|a, b| a | b).unwrap()
+    s.as_bytes()
+        .into_iter()
+        .map(|c| from_char(*c))
+        .reduce(|a, b| a | b)
+        .unwrap()
 }
 
 fn from_char(char: u8) -> BitVector {

@@ -1,9 +1,9 @@
-use std::time::{Duration, Instant};
 use crate::problem::GridSolver;
+use std::time::{Duration, Instant};
 
-mod problem;
 mod bitvec;
 mod naive;
+mod problem;
 
 fn main() {
     let problem = problem::ProblemStatement::new();

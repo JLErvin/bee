@@ -1,11 +1,11 @@
 use std::fs::File;
-use std::io::BufReader;
 use std::io::prelude::*;
+use std::io::BufReader;
 
 pub struct ProblemStatement {
     pub center: u8,
     pub others: Vec<u8>,
-    pub dictionary: Vec<String>
+    pub dictionary: Vec<String>,
 }
 
 pub trait GridSolver {
@@ -18,7 +18,11 @@ impl ProblemStatement {
         let center = ProblemStatement::parse_center();
         let others = ProblemStatement::parse_others();
         let dictionary = ProblemStatement::parse_dictionary();
-        ProblemStatement { center, others, dictionary }
+        ProblemStatement {
+            center,
+            others,
+            dictionary,
+        }
     }
 
     fn parse_center() -> u8 {
