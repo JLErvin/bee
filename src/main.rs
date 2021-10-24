@@ -1,46 +1,26 @@
-use std::error::Error;
-use std::fs::File;
-use std::io::BufReader;
-use std::io::prelude::*;
-use std::path::Path;
-use std::env;
+use std::time::{Duration, Instant};
+use crate::problem::GridSolver;
 
-type BitVector = u32;
-
+mod problem;
+mod bitvec;
+mod naive;
 
 fn main() {
-    let problem = ProblemStatement::new();
+    let problem = problem::ProblemStatement::new();
     println!("{}", problem.center);
     println!("{:?}", problem.others);
-}
 
-struct ProblemStatement {
-    pub center: u8,
-    pub others: Vec<u8>,
-    pub dictionary: Vec<String>
-}
+    let bit_solver = Box::new(bitvec::BitSolver {});
+    let set_solver = Box::new(bitvec::BitSolver {});
+    let naive_solver = Box::new(naive::NaiveSolver {});
+    let solvers: Vec<Box<dyn GridSolver>> = vec![bit_solver, naive_solver];
 
-impl ProblemStatement {
-    pub fn new() -> ProblemStatement {
-        let center = ProblemStatement::parse_center();
-        let others = ProblemStatement::parse_others();
-        let dictionary = ProblemStatement::parse_dictionary();
-        ProblemStatement { center, others, dictionary }
-    }
-
-    fn parse_center() -> u8 {
-        let c = std::io::stdin().lock().lines().next().unwrap().unwrap();
-        c.chars().next().unwrap() as u8
-    }
-
-    fn parse_others() -> Vec<u8> {
-        let o = std::io::stdin().lock().lines().next().unwrap().unwrap();
-        o.chars().map(|c| c as u8).collect::<Vec<u8>>()
-    }
-
-    fn parse_dictionary() -> Vec<String> {
-        let file = File::open("words.txt").unwrap();
-        let buffer = BufReader::new(file);
-        buffer.lines().map(|l| l.unwrap()).collect::<Vec<String>>()
+    for solver in solvers.into_iter() {
+        let now = Instant::now();
+        let v = solver.solve(&problem);
+        let elapsed = now.elapsed().as_nanos();
+        println!("{}", solver.name());
+        println!("  Found {} words", v.len());
+        println!("  Took {:>10} ns", elapsed);
     }
 }
