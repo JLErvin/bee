@@ -1,6 +1,6 @@
 use std::fs::File;
 use std::io::prelude::*;
-use std::io::BufReader;
+use std::io::{BufReader,self};
 
 pub struct ProblemStatement {
     pub center: u8,
@@ -26,11 +26,15 @@ impl ProblemStatement {
     }
 
     fn parse_center() -> u8 {
+        print!("Center letter: ");
+        let _ = io::stdout().flush();
         let c = std::io::stdin().lock().lines().next().unwrap().unwrap();
         c.chars().next().unwrap() as u8
     }
 
     fn parse_others() -> Vec<u8> {
+        print!("Other letters: ");
+        let _ = io::stdout().flush();
         let o = std::io::stdin().lock().lines().next().unwrap().unwrap();
         o.chars().map(|c| c as u8).collect::<Vec<u8>>()
     }
