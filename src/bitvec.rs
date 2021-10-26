@@ -52,4 +52,3 @@ impl BitSolver {
         b & !(center_mask | other_mask) == 0
     }
 }
-
