@@ -1,6 +1,6 @@
 use std::fs::File;
 use std::io::prelude::*;
-use std::io::{BufReader,self};
+use std::io::{self, BufReader};
 
 pub struct ProblemStatement {
     pub center: u8,

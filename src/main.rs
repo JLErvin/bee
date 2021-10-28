@@ -4,6 +4,7 @@ use std::time::Instant;
 mod bitvec;
 mod naive;
 mod problem;
+mod regex;
 mod set;
 
 fn main() {
@@ -14,7 +15,9 @@ fn main() {
     let bit_solver = Box::new(bitvec::BitSolver {});
     let set_solver = Box::new(set::SetSolver {});
     let naive_solver = Box::new(naive::NaiveSolver {});
-    let solvers: Vec<Box<dyn GridSolver>> = vec![naive_solver, set_solver, bit_solver];
+    let regex_solver = Box::new(regex::RegexSolver {});
+    let solvers: Vec<Box<dyn GridSolver>> =
+        vec![naive_solver, set_solver, bit_solver, regex_solver];
 
     for solver in solvers.into_iter() {
         let now = Instant::now();
